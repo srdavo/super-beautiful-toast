@@ -71,20 +71,30 @@
 }
 
 /* A stack is only an anchor. The toasts inside are absolute and placed by
-   transform, by rank. No flex, because flow layout cannot express a deck. */
+   transform, by rank. No flex, because flow layout cannot express a deck.
+
+   It spans the full width on every anchor, including the side ones. That is
+   load-bearing: an absolutely positioned box with only one horizontal offset
+   shrinks to fit its contents, and its contents here are themselves absolute,
+   so they contribute nothing. The stack would measure 0px wide, and a toast
+   inside a 0px box gets 0px of available width and wraps its text to one
+   character per line. The distance from the screen edge belongs to the toast
+   instead. */
 .sbt-stack {
     position: absolute;
+    left: 0;
+    right: 0;
     pointer-events: none;
 }
 
-.sbt-top-left { top: var(--sbt-edge-offset); left: var(--sbt-edge-offset); }
-.sbt-top-center { top: var(--sbt-edge-offset); left: 0; right: 0; }
-.sbt-top-right { top: var(--sbt-edge-offset); right: var(--sbt-edge-offset); }
-.sbt-center-left { top: 50%; left: var(--sbt-edge-offset); }
-.sbt-center-right { top: 50%; right: var(--sbt-edge-offset); }
-.sbt-bottom-left { bottom: var(--sbt-edge-offset); left: var(--sbt-edge-offset); }
-.sbt-bottom-center { bottom: var(--sbt-edge-offset); left: 0; right: 0; }
-.sbt-bottom-right { bottom: var(--sbt-edge-offset); right: var(--sbt-edge-offset); }
+.sbt-top-left,
+.sbt-top-center,
+.sbt-top-right { top: var(--sbt-edge-offset); }
+.sbt-center-left,
+.sbt-center-right { top: 50%; }
+.sbt-bottom-left,
+.sbt-bottom-center,
+.sbt-bottom-right { bottom: var(--sbt-edge-offset); }
 
 .sbt-toast {
     position: absolute;
@@ -118,16 +128,17 @@
 .sbt-bottom-center .sbt-toast,
 .sbt-bottom-right .sbt-toast { bottom: 0; }
 
-/* Horizontal anchor. Centred stacks use left:50% plus an xPercent of -50 from
-   the engine, rather than a translate here that the transform would fight. */
+/* Horizontal anchor, and the distance from the screen edge with it. Centred
+   stacks use left:50% plus an xPercent of -50 from the engine, rather than a
+   translate here that the transform would fight. */
 .sbt-top-left .sbt-toast,
 .sbt-center-left .sbt-toast,
-.sbt-bottom-left .sbt-toast { left: 0; }
+.sbt-bottom-left .sbt-toast { left: var(--sbt-edge-offset); }
 .sbt-top-center .sbt-toast,
 .sbt-bottom-center .sbt-toast { left: 50%; }
 .sbt-top-right .sbt-toast,
 .sbt-center-right .sbt-toast,
-.sbt-bottom-right .sbt-toast { right: 0; }
+.sbt-bottom-right .sbt-toast { right: var(--sbt-edge-offset); }
 
 /* Cards shrink toward the edge they are anchored to, which is what makes it
    read as a deck rather than a list. */

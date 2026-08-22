@@ -157,6 +157,15 @@ flickers.
     host binds from the `@enter` hook instead, which receives the element once,
     and unbinds when the exit finishes.
 
+14. **Every stack spans the full width, side anchors included.** An absolutely
+    positioned box given only one horizontal offset shrinks to fit its
+    contents, and the contents here are absolute too, so they contribute
+    nothing: the stack measured 0px and every toast inside it wrapped to one
+    character per line, then settled into a squashed two-line card. The centred
+    anchors hid the bug because they already carried `left: 0; right: 0` for
+    centring. The distance from the screen edge belongs to the toast, not to
+    the stack.
+
 ## Lifecycle
 
 Every morph registers an idempotent `settle()`. It is called by its own safety

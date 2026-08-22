@@ -24,3 +24,6 @@ What changed on the way out:
 - Added a `warning` variant.
 - The morph is now tunable through options instead of a constant in the file.
   The second, dormant morph style was removed.
+- Fixed a layout bug carried over from the original: toasts in the six side
+  positions were laid out inside a stack that measured 0px wide, so their text
+  wrapped to one character per line before settling into a squashed card.
