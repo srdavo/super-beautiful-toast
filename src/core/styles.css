@@ -1,0 +1,268 @@
+/**
+ * super-beautiful-toast. Styles.
+ *
+ * Every value a design might want to change is a custom property, declared on
+ * `:where(:root)` so it carries ZERO specificity: redefining one anywhere in
+ * your own stylesheet wins, no `!important` and no cascade archaeology.
+ *
+ * Defaults are real colours, not references to a design system you may not
+ * have. Drop this file into a blank page and the toasts look finished; point
+ * the tokens at your palette and they look like your product.
+ *
+ * Class names are all prefixed `sbt-` and none of them are generated, so they
+ * are safe to target directly.
+ */
+
+:where(:root) {
+    /* Surface */
+    --sbt-bg: #ffffff;
+    --sbt-fg: #1b1b1f;
+    --sbt-radius: 32px;
+    --sbt-shadow: 0 2px 12px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.22);
+    --sbt-padding: 12px 16px;
+    --sbt-max-width: min(460px, calc(100vw - 32px));
+    --sbt-gap: 10px;
+
+    /* Typography, inheriting the page by default */
+    --sbt-font-family: inherit;
+    --sbt-font-size: 0.875rem;
+    --sbt-line-height: 1.35;
+    --sbt-font-weight: 400;
+
+    /* Layer */
+    --sbt-z-index: 2100;
+    --sbt-edge-offset: 16px;
+
+    /* Variants */
+    --sbt-success-bg: #d7f2de;
+    --sbt-success-fg: #0c3a1f;
+    --sbt-error-bg: #ffdad6;
+    --sbt-error-fg: #410e0b;
+    --sbt-warning-bg: #ffe08a;
+    --sbt-warning-fg: #3f2e00;
+    --sbt-info-bg: #dfe4ff;
+    --sbt-info-fg: #16215b;
+}
+
+@media (prefers-color-scheme: dark) {
+    :where(:root) {
+        --sbt-bg: #1c1b1f;
+        --sbt-fg: #e6e1e5;
+        --sbt-shadow: 0 2px 16px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.18);
+
+        --sbt-success-bg: #1f4d31;
+        --sbt-success-fg: #b8f0c7;
+        --sbt-error-bg: #8c1d18;
+        --sbt-error-fg: #ffdad6;
+        --sbt-warning-bg: #574200;
+        --sbt-warning-fg: #ffe08a;
+        --sbt-info-bg: #2b3a7a;
+        --sbt-info-fg: #dfe4ff;
+    }
+}
+
+/* The layer covers the screen, paints nothing and catches nothing: the page
+   underneath stays fully interactive. Only the toasts take the pointer. */
+.sbt-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: var(--sbt-z-index);
+}
+
+/* A stack is only an anchor. The toasts inside are absolute and placed by
+   transform, by rank. No flex, because flow layout cannot express a deck. */
+.sbt-stack {
+    position: absolute;
+    pointer-events: none;
+}
+
+.sbt-top-left { top: var(--sbt-edge-offset); left: var(--sbt-edge-offset); }
+.sbt-top-center { top: var(--sbt-edge-offset); left: 0; right: 0; }
+.sbt-top-right { top: var(--sbt-edge-offset); right: var(--sbt-edge-offset); }
+.sbt-center-left { top: 50%; left: var(--sbt-edge-offset); }
+.sbt-center-right { top: 50%; right: var(--sbt-edge-offset); }
+.sbt-bottom-left { bottom: var(--sbt-edge-offset); left: var(--sbt-edge-offset); }
+.sbt-bottom-center { bottom: var(--sbt-edge-offset); left: 0; right: 0; }
+.sbt-bottom-right { bottom: var(--sbt-edge-offset); right: var(--sbt-edge-offset); }
+
+.sbt-toast {
+    position: absolute;
+    pointer-events: auto;
+    /* none, so a vertical drag arrives as pointer events instead of being
+       swallowed by the browser's own scrolling. */
+    touch-action: none;
+    will-change: transform, opacity;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Extends the hit area. The pseudo-element belongs to the toast, so it counts
+   for :hover and mouseenter: the deck stops collapsing the instant the cursor
+   drifts a pixel off a card, and once expanded this covers the gaps between
+   them. It does swallow clicks in that margin while toasts are up, which is
+   why it is 24px and not more. */
+.sbt-toast::before {
+    content: '';
+    position: absolute;
+    inset: -24px;
+}
+
+/* Vertical anchor within the stack */
+.sbt-top-left .sbt-toast,
+.sbt-top-center .sbt-toast,
+.sbt-top-right .sbt-toast,
+.sbt-center-left .sbt-toast,
+.sbt-center-right .sbt-toast { top: 0; }
+.sbt-bottom-left .sbt-toast,
+.sbt-bottom-center .sbt-toast,
+.sbt-bottom-right .sbt-toast { bottom: 0; }
+
+/* Horizontal anchor. Centred stacks use left:50% plus an xPercent of -50 from
+   the engine, rather than a translate here that the transform would fight. */
+.sbt-top-left .sbt-toast,
+.sbt-center-left .sbt-toast,
+.sbt-bottom-left .sbt-toast { left: 0; }
+.sbt-top-center .sbt-toast,
+.sbt-bottom-center .sbt-toast { left: 50%; }
+.sbt-top-right .sbt-toast,
+.sbt-center-right .sbt-toast,
+.sbt-bottom-right .sbt-toast { right: 0; }
+
+/* Cards shrink toward the edge they are anchored to, which is what makes it
+   read as a deck rather than a list. */
+.sbt-top-left .sbt-toast { transform-origin: top left; }
+.sbt-top-center .sbt-toast { transform-origin: top center; }
+.sbt-top-right .sbt-toast { transform-origin: top right; }
+.sbt-center-left .sbt-toast { transform-origin: top left; }
+.sbt-center-right .sbt-toast { transform-origin: top right; }
+.sbt-bottom-left .sbt-toast { transform-origin: bottom left; }
+.sbt-bottom-center .sbt-toast { transform-origin: bottom center; }
+.sbt-bottom-right .sbt-toast { transform-origin: bottom right; }
+
+/* The skin: this is what morphs out of the button. Colour comes from two
+   custom properties, so a variant is just a pair of values. */
+.sbt-shell {
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    background: var(--sbt-toast-bg, var(--sbt-bg));
+    color: var(--sbt-toast-fg, var(--sbt-fg));
+    border-radius: var(--sbt-radius);
+    box-shadow: var(--sbt-shadow);
+    max-width: var(--sbt-max-width);
+    overflow: hidden;
+    cursor: default;
+    font-family: var(--sbt-font-family);
+    font-size: var(--sbt-font-size);
+    font-weight: var(--sbt-font-weight);
+    line-height: var(--sbt-line-height);
+    /* The morph turns this off while it flies, since the engine owns the transform
+       during the flight, and turns it back on when it lands. */
+    transition: transform 0.3s cubic-bezier(0, 0, 0.5, 1);
+}
+
+/* Lifts the card under the cursor. On the shell, not the toast, so it responds
+   to the card itself and not to the extended hit area. */
+.sbt-shell:hover {
+    transform: scale(1.05);
+}
+
+.sbt-variant-success { --sbt-toast-bg: var(--sbt-success-bg); --sbt-toast-fg: var(--sbt-success-fg); }
+.sbt-variant-error { --sbt-toast-bg: var(--sbt-error-bg); --sbt-toast-fg: var(--sbt-error-fg); }
+.sbt-variant-warning { --sbt-toast-bg: var(--sbt-warning-bg); --sbt-toast-fg: var(--sbt-warning-fg); }
+.sbt-variant-info { --sbt-toast-bg: var(--sbt-info-bg); --sbt-toast-fg: var(--sbt-info-fg); }
+/* variant-neutral deliberately defines nothing: it is the surface colour. */
+
+.sbt-body {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: var(--sbt-padding);
+    box-sizing: border-box;
+}
+
+.sbt-content {
+    display: flex;
+    align-items: center;
+    gap: var(--sbt-gap);
+    min-width: 0;
+}
+
+/* Icon and text inherit the shell's colour, so a coloured card stays coherent
+   without every variant having to restate its foreground. */
+.sbt-icon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: inherit;
+}
+
+.sbt-message {
+    color: inherit;
+    min-width: 0;
+}
+
+.sbt-close {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.sbt-close:hover,
+.sbt-close:focus-visible {
+    opacity: 1;
+    background: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.sbt-close:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+}
+
+/* Anyone who asked the system for less motion gets none of the flourishes.
+   The engine already lands every animation instantly; this covers the
+   transitions CSS owns. */
+@media (prefers-reduced-motion: reduce) {
+    .sbt-shell,
+    .sbt-close {
+        transition: none;
+    }
+    .sbt-shell:hover {
+        transform: none;
+    }
+}
+
+/* Announcement regions. Present from mount and never moved, because a live
+   region that appears at the same moment its content does is a live region
+   screen readers are entitled to miss. */
+.sbt-announcer {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}

@@ -1,0 +1,73 @@
+{
+  "name": "super-beautiful-toast",
+  "version": "0.1.0",
+  "description": "Toast notifications for Vue 3 where the button that triggers the action becomes the toast. Physical springs, a card-deck stack, swipe and scroll to dismiss. No dependencies.",
+  "type": "module",
+  "types": "./index.d.ts",
+  "main": "./dist/super-beautiful-toast.js",
+  "module": "./dist/super-beautiful-toast.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/super-beautiful-toast.js"
+    },
+    "./core": {
+      "types": "./index.d.ts",
+      "import": "./dist/core.js"
+    },
+    "./style.css": "./dist/style.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "index.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "demo": "npm --prefix demo run dev",
+    "demo:build": "npm run build && npm --prefix demo run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "toast",
+    "notification",
+    "snackbar",
+    "vue",
+    "vue3",
+    "morph",
+    "shared-element",
+    "spring",
+    "animation",
+    "microinteraction",
+    "zero-dependencies"
+  ],
+  "author": "Luis David (https://github.com/srdavo)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/srdavo/super-beautiful-toast.git"
+  },
+  "bugs": {
+    "url": "https://github.com/srdavo/super-beautiful-toast/issues"
+  },
+  "homepage": "https://github.com/srdavo/super-beautiful-toast#readme",
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.2",
+    "vite": "^7.3.1",
+    "vue": "^3.5.25"
+  }
+}

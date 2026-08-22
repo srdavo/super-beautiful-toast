@@ -1,0 +1,98 @@
+/* The demo's own theme. It also doubles as the worked example of retheming the
+   toasts: every --sbt-* below is an override of a package default. */
+
+:root {
+    --bg: #fbfbfa;
+    --surface: #ffffff;
+    --line: #e6e4e0;
+    --text: #1a1a18;
+    --muted: #74716b;
+    --accent: #1a1a18;
+    --accent-text: #ffffff;
+    --code-bg: #f4f3f1;
+    --radius: 14px;
+
+    color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+    --bg: #0e0e10;
+    --surface: #17171a;
+    --line: #26262b;
+    --text: #ececef;
+    --muted: #8d8d96;
+    --accent: #ececef;
+    --accent-text: #0e0e10;
+    --code-bg: #1c1c20;
+
+    color-scheme: dark;
+
+    /* The toasts follow the page, because the tokens are just values. */
+    --sbt-bg: #202026;
+    --sbt-fg: #f2f2f5;
+    --sbt-shadow: 0 2px 20px rgba(0, 0, 0, 0.55), 0 0 1px rgba(255, 255, 255, 0.14);
+    --sbt-success-bg: #16412a;
+    --sbt-success-fg: #a9ecc0;
+    --sbt-error-bg: #4d1512;
+    --sbt-error-fg: #ffc9c3;
+    --sbt-warning-bg: #4a3800;
+    --sbt-warning-fg: #ffd979;
+    --sbt-info-bg: #1d2a5e;
+    --sbt-info-fg: #ccd8ff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; margin: 0; }
+
+code, pre { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; }
+
+button { font-family: inherit; }
+
+.wrap {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 24px 160px;
+}
+
+/* ── Buttons: the thing that becomes the toast ─────────────────────────────
+   Deliberately varied (pill, square, tonal) because the morph reads the
+   button's own background, radius and shadow on the way out. */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0, 0, 0.4, 1), border-color 0.2s ease;
+}
+
+.btn:hover { transform: translateY(-1px); border-color: var(--muted); }
+.btn:active { transform: translateY(0); }
+
+.btn.solid { background: var(--accent); color: var(--accent-text); border-color: transparent; }
+.btn.square { border-radius: 10px; }
+.btn.raised { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16); border-color: transparent; }
+.btn.big { padding: 14px 28px; font-size: 15px; }
+
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.muted { color: var(--muted); }
