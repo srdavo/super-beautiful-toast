@@ -8,7 +8,14 @@ import CustomToast from './components/CustomToast.vue'
 const toast = useToast()
 
 // ── Theme ───────────────────────────────────────────────────────────────────
-const dark = ref(false)
+// Arranca en lo que el visitante ya está viendo: su elección previa si la hay,
+// y si no, lo que diga el sistema.
+const dark = ref(
+    document.documentElement.dataset.theme
+        ? document.documentElement.dataset.theme === 'dark'
+        : window.matchMedia('(prefers-color-scheme: dark)').matches,
+)
+
 function toggleTheme() {
     dark.value = !dark.value
     document.documentElement.dataset.theme = dark.value ? 'dark' : 'light'

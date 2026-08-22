@@ -41,6 +41,36 @@
     --sbt-info-fg: #ccd8ff;
 }
 
+/* Sin elegir tema, manda el del sistema. El toggle sigue ganando en ambos
+   sentidos porque su selector es más específico que este. */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+        --bg: #0e0e10;
+        --surface: #17171a;
+        --line: #26262b;
+        --text: #ececef;
+        --muted: #8d8d96;
+        --accent: #ececef;
+        --accent-text: #0e0e10;
+        --code-bg: #1c1c20;
+    
+        color-scheme: dark;
+    
+        /* The toasts follow the page, because the tokens are just values. */
+        --sbt-bg: #202026;
+        --sbt-fg: #f2f2f5;
+        --sbt-shadow: 0 2px 20px rgba(0, 0, 0, 0.55), 0 0 1px rgba(255, 255, 255, 0.14);
+        --sbt-success-bg: #16412a;
+        --sbt-success-fg: #a9ecc0;
+        --sbt-error-bg: #4d1512;
+        --sbt-error-fg: #ffc9c3;
+        --sbt-warning-bg: #4a3800;
+        --sbt-warning-fg: #ffd979;
+        --sbt-info-bg: #1d2a5e;
+        --sbt-info-fg: #ccd8ff;
+    }
+}
+
 * { box-sizing: border-box; }
 
 body {
