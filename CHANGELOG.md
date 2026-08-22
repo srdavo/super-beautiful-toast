@@ -27,3 +27,6 @@ What changed on the way out:
 - Fixed a layout bug carried over from the original: toasts in the six side
   positions were laid out inside a stack that measured 0px wide, so their text
   wrapped to one character per line before settling into a squashed card.
+- Fixed another one: splitting the message for the letter reveal changed how
+  wide it measured, so some messages broke onto a second line for a few frames
+  when the reveal ended. Splitting is now transparent to layout.

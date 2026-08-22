@@ -132,6 +132,16 @@ flickers.
    hundreds of spans, it janks, and the effect is lost anyway. The spans are
    reverted once the last one lands.
 
+   Splitting also has to leave the layout alone, and that is less obvious than
+   it sounds. `ToastMessage` splits on mount, which runs BEFORE the enter hook,
+   so the morph freezes the body's width around text that is already a row of
+   inline-blocks. That row does not measure the same as the run of text it
+   replaced (here 66.9px against 67.4px, and the sign of the difference depends
+   on the string), so when the split reverted, the real text no longer fitted
+   the frozen width and broke onto a second line until the morph settled and
+   released it. `splitChars` now keeps words whole, holds a single-line text to
+   one line, and freezes the box at the size it had before the split.
+
 9. **Centred positions do not use `translate(-50%)` on the stack.** The stack is
    `left: 0; right: 0` and the toast gets `xPercent: -50` from the engine, so
    the centring composes with the rank transform instead of being overwritten
