@@ -2,14 +2,14 @@
    toasts: every --sbt-* below is an override of a package default. */
 
 :root {
-    --bg: #fbfbfa;
+    --bg: #f0eee8;
     --surface: #ffffff;
-    --line: #e6e4e0;
+    --line: #ddd8ce;
     --text: #1a1a18;
-    --muted: #74716b;
+    --muted: #6e6b64;
     --accent: #1a1a18;
     --accent-text: #ffffff;
-    --code-bg: #f4f3f1;
+    --code-bg: #e7e3da;
     --radius: 14px;
 
     color-scheme: light;
@@ -119,6 +119,16 @@ button { font-family: inherit; }
 .btn:active { transform: translateY(0); }
 
 .btn.solid { background: var(--accent); color: var(--accent-text); border-color: transparent; }
+
+/* Tonos. Los toma del toast, no de una paleta propia: el botón y el toast que
+   dispara son el mismo color, así que el morph se lee como un estiramiento en
+   vez de como un cambio de pieza. */
+.btn.tone-success { background: var(--sbt-success-bg); color: var(--sbt-success-fg); border-color: transparent; }
+.btn.tone-error { background: var(--sbt-error-bg); color: var(--sbt-error-fg); border-color: transparent; }
+.btn.tone-warning { background: var(--sbt-warning-bg); color: var(--sbt-warning-fg); border-color: transparent; }
+.btn.tone-info { background: var(--sbt-info-bg); color: var(--sbt-info-fg); border-color: transparent; }
+.btn.tone-tint { background: #2b1b4d; color: #e9ddff; border-color: transparent; }
+.btn.tone-soft { background: var(--surface); border-color: var(--line); }
 .btn.square { border-radius: 10px; }
 .btn.raised { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16); border-color: transparent; }
 .btn.big { padding: 14px 28px; font-size: 15px; }
