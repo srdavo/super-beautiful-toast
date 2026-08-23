@@ -12,13 +12,14 @@ npm install super-beautiful-toast
 
 ## Demo
 
-<!-- Video link goes here -->
+**[srdavo.github.io/super-beautiful-toast](https://srdavo.github.io/super-beautiful-toast/)**
 
-Run it locally:
+Every feature has a section, and the morph and the deck have sliders for their
+physics. Or run it against your own changes:
 
 ```sh
 npm install
-npm run demo        # the showcase, with live controls for the physics
+npm run demo        # hot-reloads from src/
 ```
 
 ## Quick start
