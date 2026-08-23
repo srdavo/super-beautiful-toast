@@ -41,19 +41,6 @@ const hostOptions = computed(() => ({
 const hostKey = computed(() => JSON.stringify(hostOptions.value))
 
 // ── Actions ─────────────────────────────────────────────────────────────────
-// Cada ancla dispara su propia variante, así el botón y el toast que sale de él
-// son del mismo color y el morph se lee como un estiramiento.
-const POSITION_TONE = {
-    'top-left': 'success',
-    'top-center': 'info',
-    'top-right': 'warning',
-    'center-left': 'error',
-    'center-right': 'info',
-    'bottom-left': 'success',
-    'bottom-center': 'warning',
-    'bottom-right': 'error',
-}
-
 const messages = [
     'Movement saved',
     'Invitation sent',
@@ -136,7 +123,7 @@ function applyTokens(name, event) {
                     Press me
                 </button>
                 <button
-                    class="btn big square tone-info"
+                    class="btn big square"
                     type="button"
                     @click="fire($event, { message: 'So did this one', variant: 'info', position: 'bottom-right' })"
                 >
@@ -151,10 +138,10 @@ function applyTokens(name, event) {
             code="toast.success('Saved', { origin: event.currentTarget })"
         >
             <div class="row">
-                <button class="btn tone-success" type="button" @click="fire($event, { message: 'From a pill', variant: 'success' })">Pill</button>
-                <button class="btn square tone-info" type="button" @click="fire($event, { message: 'From a square', variant: 'info' })">Square</button>
-                <button class="btn raised tone-warning" type="button" @click="fire($event, { message: 'From a raised button', variant: 'warning' })">Raised</button>
-                <button class="btn tone-soft" type="button" @click="toast.neutral('No origin, plain slide-in')">No origin</button>
+                <button class="btn" type="button" @click="fire($event, { message: 'From a pill', variant: 'success' })">Pill</button>
+                <button class="btn square" type="button" @click="fire($event, { message: 'From a square', variant: 'info' })">Square</button>
+                <button class="btn raised" type="button" @click="fire($event, { message: 'From a raised button', variant: 'warning' })">Raised</button>
+                <button class="btn" type="button" @click="toast.neutral('No origin, plain slide-in')">No origin</button>
             </div>
         </Section>
 
@@ -172,7 +159,7 @@ toast.neutral('Copied')"
                 <button class="btn tone-error" type="button" @click="fire($event, { message: 'Could not save', variant: 'error' })">error</button>
                 <button class="btn tone-warning" type="button" @click="fire($event, { message: 'Check the date', variant: 'warning' })">warning</button>
                 <button class="btn tone-info" type="button" @click="fire($event, { message: 'Syncing…', variant: 'info' })">info</button>
-                <button class="btn tone-soft" type="button" @click="fire($event, { message: 'Copied to clipboard', variant: 'neutral' })">neutral</button>
+                <button class="btn" type="button" @click="fire($event, { message: 'Copied to clipboard', variant: 'neutral' })">neutral</button>
             </div>
         </Section>
 
@@ -186,9 +173,8 @@ toast.neutral('Copied')"
                     v-for="position in TOAST_POSITIONS"
                     :key="position"
                     class="btn square"
-                    :class="`tone-${POSITION_TONE[position]}`"
                     type="button"
-                    @click="fire($event, { message: position, position, variant: POSITION_TONE[position] })"
+                    @click="fire($event, { message: position, position })"
                 >
                     {{ position }}
                 </button>
@@ -203,7 +189,7 @@ messages.forEach(m => toast.success(m))"
         >
             <div class="row">
                 <button class="btn solid" type="button" @click="throwMany">Throw five</button>
-                <button class="btn tone-soft" type="button" @click="toast.dismissAll()">Dismiss all</button>
+                <button class="btn" type="button" @click="toast.dismissAll()">Dismiss all</button>
             </div>
             <p class="muted note">
                 Drag one upward, or scroll up over it, to throw it away. Past the limit
@@ -219,9 +205,9 @@ toast.error('Read me', { duration: 0 })          // sticky, closable
 toast.show({ message: 'Sticky, no icon', duration: 0, icon: null })"
         >
             <div class="row">
-                <button class="btn tone-soft" type="button" @click="fire($event, { message: 'Gone in a second and a half', duration: 1500 })">1.5s</button>
-                <button class="btn tone-info" type="button" @click="fire($event, { message: 'Ten long seconds', duration: 10000, variant: 'info' })">10s</button>
-                <button class="btn tone-error" type="button" @click="fire($event, { message: 'I am not going anywhere', duration: 0, variant: 'error' })">Sticky</button>
+                <button class="btn" type="button" @click="fire($event, { message: 'Gone in a second and a half', duration: 1500 })">1.5s</button>
+                <button class="btn" type="button" @click="fire($event, { message: 'Ten long seconds', duration: 10000, variant: 'info' })">10s</button>
+                <button class="btn" type="button" @click="fire($event, { message: 'I am not going anywhere', duration: 0, variant: 'error' })">Sticky</button>
             </div>
         </Section>
 
@@ -235,9 +221,9 @@ toast.show({ message: 'Sticky, no icon', duration: 0, icon: null })"
 toast.show({ message: 'Just this one', tint: { bg: '#2b1b4d', fg: '#e9ddff' } })"
         >
             <div class="row">
-                <button class="btn tone-soft" type="button" @click="applyTokens('default', $event)">Round</button>
-                <button class="btn square tone-soft" type="button" @click="applyTokens('square', $event)">Squared</button>
-                <button class="btn tone-soft" type="button" @click="applyTokens('compact', $event)">Compact</button>
+                <button class="btn" type="button" @click="applyTokens('default', $event)">Round</button>
+                <button class="btn square" type="button" @click="applyTokens('square', $event)">Squared</button>
+                <button class="btn" type="button" @click="applyTokens('compact', $event)">Compact</button>
                 <button
                     class="btn tone-tint"
                     type="button"
@@ -258,9 +244,9 @@ toast.show({ message: 'No icon at all', icon: null })
 <ToastHost icon-component=&quot;md-icon&quot; />   <!-- your icon font -->"
         >
             <div class="row">
-                <button class="btn tone-success" type="button" @click="fire($event, { message: 'Built-in check', variant: 'success' })">Built-in</button>
-                <button class="btn tone-warning" type="button" @click="fire($event, { message: 'Party time', icon: '🎉', variant: 'warning' })">Emoji</button>
-                <button class="btn tone-soft" type="button" @click="fire($event, { message: 'Nothing but text', icon: null })">None</button>
+                <button class="btn" type="button" @click="fire($event, { message: 'Built-in check', variant: 'success' })">Built-in</button>
+                <button class="btn" type="button" @click="fire($event, { message: 'Party time', icon: '🎉' })">Emoji</button>
+                <button class="btn" type="button" @click="fire($event, { message: 'Nothing but text', icon: null })">None</button>
             </div>
         </Section>
 
@@ -274,7 +260,7 @@ toast.show({ message: 'No icon at all', icon: null })
 })"
         >
             <div class="row">
-                <button class="btn tone-tint" type="button" @click="customContent">Custom component</button>
+                <button class="btn" type="button" @click="customContent">Custom component</button>
             </div>
         </Section>
 
@@ -284,7 +270,7 @@ toast.show({ message: 'No icon at all', icon: null })
             code="toast.info(`Syncing… ${n}`, { key: 'sync' })"
         >
             <div class="row">
-                <button class="btn tone-info" type="button" @click="repeatSameKey">Press repeatedly</button>
+                <button class="btn" type="button" @click="repeatSameKey">Press repeatedly</button>
             </div>
         </Section>
 
@@ -305,8 +291,8 @@ toast.show({ message: 'No icon at all', icon: null })
                 <Knob v-model="knobs.maxVisible" label="maxVisible" :min="1" :max="6" hint="cards drawn collapsed" />
             </div>
             <div class="row playground-actions">
-                <button class="btn tone-success" type="button" @click="fire($event, { message: 'Feel that', variant: 'success' })">Fire one</button>
-                <button class="btn tone-soft" type="button" @click="throwMany">Throw five</button>
+                <button class="btn solid" type="button" @click="fire($event, { message: 'Feel that', variant: 'success' })">Fire one</button>
+                <button class="btn" type="button" @click="throwMany">Throw five</button>
             </div>
         </Section>
 

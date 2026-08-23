@@ -10,6 +10,13 @@
     --accent: #1a1a18;
     --accent-text: #ffffff;
     --code-bg: #e7e3da;
+
+    --tone-success: #1d7a4c;
+    --tone-error: #b3261e;
+    --tone-warning: #a06a00;
+    --tone-info: #2f4fc4;
+    --tone-tint: #4a2d8f;
+    --tone-on: #ffffff;
     --radius: 14px;
 
     color-scheme: light;
@@ -24,6 +31,13 @@
     --accent: #ececef;
     --accent-text: #0e0e10;
     --code-bg: #1c1c20;
+
+    --tone-success: #48b47c;
+    --tone-error: #ef6a5e;
+    --tone-warning: #e0aa3a;
+    --tone-info: #7f95f7;
+    --tone-tint: #a68bf0;
+    --tone-on: #10100f;
 
     color-scheme: dark;
 
@@ -53,6 +67,13 @@
         --accent: #ececef;
         --accent-text: #0e0e10;
         --code-bg: #1c1c20;
+
+    --tone-success: #48b47c;
+    --tone-error: #ef6a5e;
+    --tone-warning: #e0aa3a;
+    --tone-info: #7f95f7;
+    --tone-tint: #a68bf0;
+    --tone-on: #10100f;
     
         color-scheme: dark;
     
@@ -120,15 +141,18 @@ button { font-family: inherit; }
 
 .btn.solid { background: var(--accent); color: var(--accent-text); border-color: transparent; }
 
-/* Tonos. Los toma del toast, no de una paleta propia: el botón y el toast que
-   dispara son el mismo color, así que el morph se lee como un estiramiento en
-   vez de como un cambio de pieza. */
-.btn.tone-success { background: var(--sbt-success-bg); color: var(--sbt-success-fg); border-color: transparent; }
-.btn.tone-error { background: var(--sbt-error-bg); color: var(--sbt-error-fg); border-color: transparent; }
-.btn.tone-warning { background: var(--sbt-warning-bg); color: var(--sbt-warning-fg); border-color: transparent; }
-.btn.tone-info { background: var(--sbt-info-bg); color: var(--sbt-info-fg); border-color: transparent; }
-.btn.tone-tint { background: #2b1b4d; color: #e9ddff; border-color: transparent; }
-.btn.tone-soft { background: var(--surface); border-color: var(--line); }
+/* Tonos de botón, para los pocos sitios donde el color ES el contenido: las
+   cuatro variantes y el botón que aplica un tint.
+   Son más saturados que el toast al que pertenecen, a propósito. Los colores
+   del toast son de tipo container, pensados para ser una tarjeta sobre un fondo
+   neutro y no para dibujarse contra él: usados tal cual daban 1.03:1 contra la
+   página, o sea ninguna silueta. Estos rondan 4:1, por encima del 3:1 que WCAG
+   pide para la superficie de un control. */
+.btn.tone-success { background: var(--tone-success); color: var(--tone-on); border-color: transparent; }
+.btn.tone-error { background: var(--tone-error); color: var(--tone-on); border-color: transparent; }
+.btn.tone-warning { background: var(--tone-warning); color: var(--tone-on); border-color: transparent; }
+.btn.tone-info { background: var(--tone-info); color: var(--tone-on); border-color: transparent; }
+.btn.tone-tint { background: var(--tone-tint); color: var(--tone-on); border-color: transparent; }
 .btn.square { border-radius: 10px; }
 .btn.raised { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16); border-color: transparent; }
 .btn.big { padding: 14px 28px; font-size: 15px; }
