@@ -81,6 +81,19 @@ function customContent(event) {
     })
 }
 
+const INSTALL = 'npm install super-beautiful-toast'
+
+async function copyInstall(event) {
+    // currentTarget se pierde tras el await, así que se captura antes.
+    const button = event.currentTarget
+    try {
+        await navigator.clipboard.writeText(INSTALL)
+        toast.success('Copied', { origin: button, duration: 2400 })
+    } catch {
+        toast.error('The browser blocked the clipboard', { origin: button })
+    }
+}
+
 // ── Live tokens ─────────────────────────────────────────────────────────────
 const tokenPresets = {
     default: { '--sbt-radius': '32px', '--sbt-padding': '12px 16px' },
@@ -114,6 +127,14 @@ function applyTokens(name, event) {
                 a card-deck stack, and gestures that let you throw a message away.
             </p>
 
+            <button class="install" type="button" @click="copyInstall">
+                <code>{{ INSTALL }}</code>
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+                    <path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z" />
+                </svg>
+                <span class="sr-only">Copy the install command</span>
+            </button>
+
             <div class="row hero-actions">
                 <button
                     class="btn solid big raised"
@@ -130,6 +151,7 @@ function applyTokens(name, event) {
                     And me, over there
                 </button>
             </div>
+
         </header>
 
         <Section
@@ -341,7 +363,35 @@ h1 {
     color: var(--muted);
 }
 
-.hero-actions { margin-top: 36px; }
+.hero-actions { margin-top: 22px; }
+
+.install {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 36px;
+    padding: 11px 16px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.install code { color: var(--text); }
+
+.install:hover,
+.install:focus-visible { border-color: var(--muted); color: var(--text); }
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
 
 .positions {
     display: grid;
